@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Máquina de Turing</title>
+    <style>
+        .underline {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Máquina de Turing</h1>
+        <h3>Ajedrez</h3>
+        <form method="POST">
+            <label for="cadena">Cadena</label>
+            <input type="text" id="cadena" name="cadena" required>
+            <button type="submit">Validar Entrada</button>
+        </form>
+        
+        <div class="results">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cinta</th>
+                        <th>Posición del Cabezal</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for (cinta_visual, posicion, estado) in resultados %}
+                    <tr>
+                        <td>
+                            {% set cinta_modificada = cinta_visual[:posicion] ~ '<span class="underline">' ~ cinta_visual[posicion] ~ '</span>' ~ cinta_visual[posicion + 1:] %}
+                            {{ cinta_modificada | safe }}
+                        </td>
+                        <td>{{ posicion }}</td>
+                        <td>{{ estado }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
