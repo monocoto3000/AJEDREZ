@@ -6,13 +6,17 @@ maquina = MaquinaTuring('MT.xml')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    resultados = []
+    resultados = ""
 
     if request.method == 'POST':
         cadena = request.form["cadena"]
-        resultados = maquina.validarCadena(cadena)
+        # resultados = maquina.validarCadena(cadena)
+        resultados = validar_cadena_temporal(cadena) 
 
     return render_template("index.html", resultados=resultados)
+
+def validar_cadena_temporal(cadena):
+    return f"Cadena '{cadena}' recibida exitosamente"
 
 if __name__ == "__main__":
     app.run(debug=True)
