@@ -1,50 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Validar Cadena de Ajedrez</title>
-    <style>
-        #board {
-            display: grid;
-            grid-template-columns: repeat(8, 50px);
-            grid-template-rows: repeat(8, 50px);
-            width: 400px;
-            height: 400px;
-            margin: 20px auto;
-        }
-        .square {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .light {
-            background-color: #f0d9b5;
-        }
-        .dark {
-            background-color: #b58863;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 <body>
-    <h1>Validar Cadena de Ajedrez</h1>
-    
-    <div id="board"></div>
-    
-    <textarea id="cadena" name="cadena" rows="4" cols="50" readonly></textarea>
-    
-    <form method="POST">
-        <input type="hidden" id="inputCadena" name="cadena" />
-        <button type="submit" id="submitBtn" style="display: none;"></button>
-    </form>
-
-    <div id="resultMessage">
-        {% if resultados %}
-            <p>{{ resultados }}</p>
-        {% endif %}
+    <h1>Tablero de Ajedrez</h1>
+    <div class="container">
+        <div id="board"></div>
+        <div class="results" id="results">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cinta</th>
+                        <th>Posición del Cabezal</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for (cinta_visual, posicion, estado) in resultados %}
+                    <tr>
+                        <td>
+                            {% set cinta_modificada = cinta_visual[:posicion] ~ '<span class="underline">' ~ cinta_visual[posicion] ~ '</span>' ~ cinta_visual[posicion + 1:] %}
+                            {{ cinta_modificada | safe }}
+                        </td>
+                        <td>{{ posicion }}</td>
+                        <td>{{ estado }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <script src="{{ url_for('static', filename='chess.js') }}"></script> 
+    <form method="POST">
+        <input type="hidden" id="cadena" name="cadena" />
+        <button type="submit" id="submitBtn"></button>
+    </form>
+    <!-- <textarea id="cadena" name="cadena" rows="4" cols="50" readonly></textarea> -->
+    <script src="{{ url_for('static', filename='chess.js') }}"></script>
 </body>
 </html>
