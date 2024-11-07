@@ -32,7 +32,7 @@ function movePiece(coord) {
         if (['♚', '♛', '♜'].includes(selectedPiece)) {
             const result = generateChessString();
             document.getElementById('cadena').value = result;
-            enviarCadena()
+            submitCadena()
         }
 
         selectedPiece = null;
@@ -92,12 +92,19 @@ function generateChessString() {
     return finalString;
 }
 
-function enviarCadena() {
-    console.log("hola");
-    const cadenaTextarea = document.getElementById('cadena');
-    const inputCadena = document.getElementById('inputCadena');
-    const form = document.querySelector('form');  
+async function submitCadena() {
+    const cadena = document.getElementById("cadena").value;
+    const formData = new FormData();
+    formData.append("cadena", cadena);
 
-    inputCadena.value = cadenaTextarea.value; 
-    form.submit();  
+    try {
+        const response = await fetch("/", {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.text();
+        document.querySelector(".results").innerHTML = data;
+    } catch (error) {
+        console.error("Error:", error);
+    }
 }
