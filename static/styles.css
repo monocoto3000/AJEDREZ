@@ -1,22 +1,23 @@
 /* General Styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #d2b48c;
     margin: 0;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 20px;
+    gap: 10px;
 }
 
 h1 {
     text-align: center;
+    color: #5e3a1b;
 }
 
 .container {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 }
 
@@ -29,15 +30,12 @@ select {
     text-align: center;
 }
 
-
-/* Chess Board Styling */
 #board {
     display: grid;
-    grid-template-columns: repeat(8, 50px);
-    grid-template-rows: repeat(8, 50px);
+    grid-template-columns: repeat(8, 70px);
+    grid-template-rows: repeat(8, 70px);
     width: 50%;
     height: 400px;
-    margin: 20px auto;
 }
 
 .square {
@@ -56,13 +54,12 @@ select {
     background-color: #b58863;
 }
 
-/* Results Table Styling */
-
 table {
-    width: 700px;
+    width: 1150px;
     border-collapse: collapse;
     table-layout: fixed; 
-    overflow-x: auto
+    overflow-x: auto;
+    background-color: #f4f0e6;
 }
 
 th, td {
@@ -70,17 +67,23 @@ th, td {
     padding: 10px;
     border: 1px solid #ddd;
     overflow-wrap: break-word;
+    color: #5e3a1b;
 }
 
 th {
-    background-color: #77bdff;
+    background-color: #8b4513;
     color: white;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #e6ccb2;
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #d2b48c;
 }
+
+.underline { 
+    text-decoration: underline; 
+}
+
