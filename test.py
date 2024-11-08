@@ -1,7 +1,7 @@
 from maquina_ajedrez import MaquinaTuring
 
 def main():
-    maquina = MaquinaTuring('MT.xml')
+    maquina = MaquinaTuring('MT1.xml')
 
     while True:
         cadena = input("Introduce la cadena (o 'exit' para terminar): ")
