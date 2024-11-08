@@ -29,7 +29,7 @@ function movePiece(coord) {
         document.getElementById(selectedCoord).textContent = '';
         square.textContent = selectedPiece;
 
-        if (['♚', '♛', '♜'].includes(selectedPiece)) {
+        if (['♚', '♖', '♕' ].includes(selectedPiece)) {
             const result = generateChessString();
             document.getElementById('cadena').value = result;
             submitCadena()

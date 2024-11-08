@@ -6,7 +6,7 @@ class MaquinaTuring:
         self.transiciones = {}  
         self.estado_inicial = None
         self.estado_final = None
-        self.max_pasos = 10000  
+        # self.max_pasos = 3000  
         self.maquina(xml_file)
 
     def maquina(self, xml_file):
@@ -47,10 +47,12 @@ class MaquinaTuring:
         estado_actual = self.estado_inicial
         resultados = []
         output = []
-        pasos = 0
+        # pasos = 0
 
-        while pasos < self.max_pasos:
-            pasos += 1
+        configuraciones_visitadas = set()
+
+        while True:
+            # pasos += 1
             
             if posicion < 0:
                 cinta.insert(0, ' ')
@@ -60,11 +62,19 @@ class MaquinaTuring:
 
             simbolo = cinta[posicion]
             clave = (estado_actual, simbolo)
-            
-            transicion = self.transiciones.get(clave) or self.transiciones.get((estado_actual, ' '))
+
+            configuracion = (estado_actual, posicion, ''.join(cinta))
+
+            if configuracion in configuraciones_visitadas:
+                resultados.append(('Ciclo infinito detectado', posicion, "error"))
+                break
+
+            configuraciones_visitadas.add(configuracion)
 
             cinta_visible = ''.join(cinta)
             resultados.append((cinta_visible, posicion, estado_actual))
+
+            transicion = self.transiciones.get(clave) or self.transiciones.get((estado_actual, ' '))
 
             if not transicion:
                 resultados.append((cinta_visible, posicion, "no valido"))
@@ -86,7 +96,7 @@ class MaquinaTuring:
                 resultados.append((cinta_visible, posicion, "valido"))
                 break
 
-        else: 
-            resultados.append(('Límite de pasos excedido', posicion, "error"))
+        # else: 
+        #     resultados.append(('Límite de pasos excedido', posicion, "error"))
 
         return resultados
