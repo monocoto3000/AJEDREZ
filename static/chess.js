@@ -50,7 +50,7 @@ function generateChessString() {
     let kingPosition = null;
     let queenPosition = null;
     let rookPositions = [];
-
+    
     for (let row = 8; row >= 1; row--) {
         for (let col = 0; col < 8; col++) {
             const coord = String.fromCharCode(97 + col) + row;
@@ -59,17 +59,38 @@ function generateChessString() {
             if (square === '♚') kingPosition = `NR${coord}`;
             if (square === '♛') queenPosition = `ND${coord}`;
             if (square === '♜') rookPositions.push(`NT${coord}`);
+        }
+    }
 
-            if (Object.keys(whitePieces).includes(square)) {
+    let orderedWhitePieces = [];
+    let whiteDame = null;
+    let whiteRooks = [];
+    let otherPieces = [];
+
+    for (let row = 8; row >= 1; row--) {
+        for (let col = 0; col < 8; col++) {
+            const coord = String.fromCharCode(97 + col) + row;
+            const square = document.getElementById(coord).textContent;
+
+            if (square === '♕') { // Dama
+                whiteDame = `BD${coord}`;
+            } else if (square === '♖') { // Torres
+                whiteRooks.push(`BT${coord}`);
+            } else if (Object.keys(whitePieces).includes(square)) { // Otras piezas
                 const symbol = whitePieces[square];
-                const whitePiecePosition = `B${symbol}${coord}`;
-                sections.king.push(whitePiecePosition);
-                sections.queen.push(whitePiecePosition);
-                sections.rook1.push(whitePiecePosition);
-                sections.rook2.push(whitePiecePosition);
+                otherPieces.push(`B${symbol}${coord}`);
             }
         }
     }
+
+    if (whiteDame) orderedWhitePieces.push(whiteDame);
+    orderedWhitePieces = orderedWhitePieces.concat(whiteRooks);
+    orderedWhitePieces = orderedWhitePieces.concat(otherPieces);
+
+    sections.king = [...orderedWhitePieces];
+    sections.queen = [...orderedWhitePieces];
+    sections.rook1 = [...orderedWhitePieces];
+    sections.rook2 = [...orderedWhitePieces];
 
     let finalString = '';
 
